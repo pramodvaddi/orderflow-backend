@@ -15,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,8 +37,11 @@ public class OrderServiceImpl implements OrderService{
     @Override
     public OrderResponseDto createOrder(OrderRequestDto orderRequestDto) {
 
+
         log.debug("Mapping OrderRequestDto to Order entity");
         Order order = modelMapper.map(orderRequestDto, Order.class);
+        order.setStatus("CREATED");
+        order.setCreatedAt(LocalDateTime.now());
         Order savedOrder = orderRepository.save(order);
         log.info("Order successfully created for the customer: {}", savedOrder.getCustomerName());
         return modelMapper.map(savedOrder, OrderResponseDto.class);

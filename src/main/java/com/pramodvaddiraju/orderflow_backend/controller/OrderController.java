@@ -26,6 +26,7 @@ public class OrderController {
 
     @PostMapping
     ResponseEntity<OrderResponseDto> createOrder(@Valid @RequestBody OrderRequestDto orderRequestDto){
+        
         log.info("Request received to create new order for customer: {}", orderRequestDto.getCustomerName());
         return ResponseEntity.status(201).body(orderService.createOrder(orderRequestDto));
     }
